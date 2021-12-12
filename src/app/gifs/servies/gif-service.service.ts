@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { Gif, SearchGifsResponse } from '../interface/gifsSearch.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -9,7 +10,7 @@ export class GifServiceService {
   api_key: string = environment.api_key
   limit:number = environment.limit
 private _historial: string[] = [];
-public resultados:any[] =[];
+public resultados:Gif[] =[];
   get historial(){
     return [...this._historial]
   }
@@ -27,8 +28,8 @@ public resultados:any[] =[];
       //se limita el numero en el arreglo 
       historial= historial.slice(0,10);
     }
-    this.http.get(`${this.URL}api_key=${this.api_key}&q=${busqueda}&limit=${this.limit}`)
-    .subscribe((response:any)=>{
+    this.http.get<SearchGifsResponse>(`${this.URL}api_key=${this.api_key}&q=${busqueda}&limit=${this.limit}`)
+    .subscribe((response)=>{
       this.resultados = response.data
       })
     }
