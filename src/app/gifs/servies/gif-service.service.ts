@@ -1,12 +1,19 @@
 import { Injectable } from '@angular/core';
-
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class GifServiceService {
+  URL:string = environment.URL
+  api_key: string = environment.api_key
+  limit:number = environment.limit
 private _historial: string[] = [];
   get historial(){
     return [...this._historial]
+  }
+  constructor(private http:HttpClient){
+
   }
   buscarGifs(busqueda:string =''){
     let historial = this._historial
@@ -21,6 +28,13 @@ private _historial: string[] = [];
       //se limita el numero en el arreglo 
       historial= historial.slice(0,10);
     }
-    console.log(historial);
-  }
+    
+    this.http.get(`${this.URL}api_key=${this.api_key}&q=${busqueda}&limit=${this.limit}`)
+
+    .subscribe((response:any)=>{
+      console.log(response.data);
+      console.log(this.api_key);
+      })
+    }
+
 }
