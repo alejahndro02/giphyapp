@@ -9,12 +9,11 @@ export class GifServiceService {
   api_key: string = environment.api_key
   limit:number = environment.limit
 private _historial: string[] = [];
+public resultados:any[] =[];
   get historial(){
     return [...this._historial]
   }
-  constructor(private http:HttpClient){
-
-  }
+  constructor(private http:HttpClient){}
   buscarGifs(busqueda:string =''){
     let historial = this._historial
     busqueda = busqueda.trim().toLocaleLowerCase()
@@ -28,12 +27,9 @@ private _historial: string[] = [];
       //se limita el numero en el arreglo 
       historial= historial.slice(0,10);
     }
-    
     this.http.get(`${this.URL}api_key=${this.api_key}&q=${busqueda}&limit=${this.limit}`)
-
     .subscribe((response:any)=>{
-      console.log(response.data);
-      console.log(this.api_key);
+      this.resultados = response.data
       })
     }
 
