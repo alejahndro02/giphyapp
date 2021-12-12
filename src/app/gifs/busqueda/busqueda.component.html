@@ -1,2 +1,4 @@
 <h5>buscar:</h5>
-<input type="text" class="form-control" placeholder="buscar gifs">
+<!-- <input type="text" class="form-control" placeholder="buscar gifs" (keyup)="buscar(txtBuscar.value)" #txtBuscar>//NOTA: con esta linea se decta lel valor a tecla oprimida -->
+<!--En esta linea se detecta el valor cuando se presiona la clea de intro o enter-->
+<input type="text" class="form-control" placeholder="buscar gifs" (keyup.enter)="buscar()" #txtBuscar>
