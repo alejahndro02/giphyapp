@@ -5,16 +5,28 @@ import { Gif, SearchGifsResponse } from '../interface/gifsSearch.interface';
 @Injectable({
   providedIn: 'root'
 })
+
 export class GifServiceService {
   URL:string = environment.URL
   api_key: string = environment.api_key
   limit:number = environment.limit
-private _historial: string[] = [];
-public resultados:Gif[] =[];
+  private _historial: string[] = [];
+  public resultados:Gif[] =[];
+
   get historial(){
     return [...this._historial]
   }
-  constructor(private http:HttpClient){}
+
+  constructor(private http:HttpClient){
+    //Se extrae la informacion de el localStorage
+    let storage= localStorage.getItem('Historial');
+    // if(storage){
+    //   this._historial = JSON.parse(storage)
+    // }
+    //otra forma de hacerlo 
+    this._historial= JSON.parse(storage!) || []
+  }
+
   buscarGifs(busqueda:string =''){
     let historial = this._historial
     busqueda = busqueda.trim().toLocaleLowerCase()
@@ -27,11 +39,13 @@ public resultados:Gif[] =[];
       historial.unshift(busqueda);
       //se limita el numero en el arreglo 
       historial= historial.slice(0,10);
+      //Se almacena la informacion dentro del localStorage
+      localStorage.setItem('Historial', JSON.stringify(historial));
     }
+
     this.http.get<SearchGifsResponse>(`${this.URL}api_key=${this.api_key}&q=${busqueda}&limit=${this.limit}`)
     .subscribe((response)=>{
       this.resultados = response.data
       })
     }
-
 }
