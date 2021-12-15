@@ -5,8 +5,7 @@
 export const environment = {
   production: false,
   api_key:'nYuxXYRAWlIoaldqJuwPaAYKaHciAryZ',
-  URL: 'https://api.giphy.com/v1/gifs/search?',
-  limit:10
+  URL: 'https://api.giphy.com/v1/gifs',
 };
 
 /*
