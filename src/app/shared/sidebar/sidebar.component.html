@@ -2,6 +2,6 @@
     <h3 class="text-light text-center">GiphyApp</h3>
     <hr class="text-light">
     <div class="list-group list-reset">
-        <a *ngFor="let item of itemHistorial" href="#" class="list-group-item list-group-item-action">{{ item | titlecase  }}</a>
+        <a *ngFor="let item of itemHistorial" (click)="research(item)" href="#" class="list-group-item list-group-item-action">{{ item | titlecase  }}</a>
     </div>
 </div>
