@@ -20,11 +20,13 @@ export class GifServiceService {
   constructor(private http:HttpClient){
     //Se extrae la informacion de el localStorage
     let storage= localStorage.getItem('Historial');
+    let ultimateResults = localStorage.getItem('UltimoResultado')
     // if(storage){
     //   this._historial = JSON.parse(storage)
     // }
     //otra forma de hacerlo 
-    this._historial= JSON.parse(storage!) || []
+    this._historial= JSON.parse(storage!) || [];
+    this.resultados = JSON.parse(ultimateResults!) || []; 
   }
 
   buscarGifs(busqueda:string =''){
@@ -46,6 +48,7 @@ export class GifServiceService {
     this.http.get<SearchGifsResponse>(`${this.URL}api_key=${this.api_key}&q=${busqueda}&limit=${this.limit}`)
     .subscribe((response)=>{
       this.resultados = response.data
+      localStorage.setItem('UltimoResultado', JSON.stringify(this.resultados))
       })
     }
 }
