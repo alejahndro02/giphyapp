@@ -12,9 +12,7 @@ get itemHistorial(){
   constructor(private gifService:GifServiceService) {
     
    }
-   research(){
-     console.log('research', this.itemHistorial);
-
-     
+   research(palabra:string){
+    this.gifService.buscarGifs(palabra)
    }
 }
